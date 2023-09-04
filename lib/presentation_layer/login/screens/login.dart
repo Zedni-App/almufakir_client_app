@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             children: [
-              LogoImage(),
+              const LogoImage(),
               TextFormField(
                 maxLines: 1,
                 keyboardType: TextInputType.emailAddress,

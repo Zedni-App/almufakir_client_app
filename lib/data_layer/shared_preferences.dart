@@ -32,3 +32,7 @@ class AppSp {
 
   static bool getBool(String key) => _sp.getBool(key) ?? false;
 }
+
+abstract class SPVars{
+  static const loggedIn="loggedIn";
+}

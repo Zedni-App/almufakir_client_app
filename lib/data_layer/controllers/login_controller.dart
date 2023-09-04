@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'dio_helper.dart';
+import '../dio_helper.dart';
 
 class LoginController {
   final DioHelper dio;

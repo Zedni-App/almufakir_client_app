@@ -47,5 +47,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>ForTakeUserProfilePhoto</string>
+    <key>NSCameraUsageDescription </key>
+    <string>ForTakeUserProfilePhoto</string>
 </dict>
 </plist>

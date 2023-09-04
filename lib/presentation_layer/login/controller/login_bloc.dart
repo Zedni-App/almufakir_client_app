@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zidne/data_layer/shared_preferences.dart';
 import 'package:zidne/domain_layer/use_cases/login/register_user.dart';
 import '../../../../core/utilities/service_locator.dart';
 import '../../../../domain_layer/use_cases/login/login_user.dart';
@@ -38,6 +39,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       },
       (r) {
         showMessage(r);
+        AppSp.setBool(key: SPVars.loggedIn, value: true);
         pageReplacement(const HomeScreen());
         emit(LoginRequest(requestState: ProcessState.done));
       },
@@ -61,6 +63,7 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
       },
       (r) {
         showMessage(r);
+        AppSp.setBool(key: SPVars.loggedIn, value: true);
         pageReplacement(const HomeScreen());
         emit(RegisterRequest(requestState: ProcessState.done));
       },
