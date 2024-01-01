@@ -1,6 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:zidne/data_layer/controllers/login_controller.dart';
+import 'package:zidne/data_layer/models/user_model.dart';
+import 'package:zidne/domain_layer/entities/user_entity.dart';
+
 import '../../core/errors/failure.dart';
 import '../../domain_layer/repository/base_login_repo.dart';
 
@@ -26,7 +29,7 @@ class LoginRepository extends BaseLoginRepo {
           ),
         );
       }
-      if(kDebugMode){
+      if (kDebugMode) {
         print(res);
       }
       return const Left(ServerFailure("عذراً هناك خطأ غير متوقع"));
@@ -36,18 +39,12 @@ class LoginRepository extends BaseLoginRepo {
   }
 
   @override
-  Future<Either<Failure, String>> registerStudent(
-      {required String email,
-      required String name,
-      required String password}) async {
+  Future<Either<Failure, String>> registerStudent(UserEntity user) async {
+    final model = UserModel.fromEntity(user);
     try {
-      final res = await controller.register(
-        email: email,
-        name: name,
-        password: password,
-      );
+      final res = await controller.register(model);
       if (res == "Inserted") {
-        return const Right("أهلا بعودتك");
+        return Right("أهلا بك ${user.fName}");
       }
       if (res == "Existed") {
         return const Left(
@@ -56,7 +53,7 @@ class LoginRepository extends BaseLoginRepo {
           ),
         );
       }
-      if(kDebugMode){
+      if (kDebugMode) {
         print(res);
       }
       return const Left(ServerFailure("عذراً هناك خطأ غير متوقع"));

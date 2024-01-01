@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:zidne/data_layer/models/user_model.dart';
 import 'package:zidne/domain_layer/entities/user_entity.dart';
+
 import '../../core/errors/failure.dart';
 import '../../domain_layer/repository/base_profile_repo.dart';
 import '../controllers/profile_controller.dart';
@@ -69,20 +71,15 @@ class ProfileRepository extends BaseProfileRepo {
   }
 
   @override
-  Future<Either<Failure, String>> getData({required String email}) async {
+  Future<Either<Failure, String>> updatePassword(
+      {required String currentPassword, required String newPassword}) async {
     try {
-      final res = await controller.getData(
-        email: email,
+      final res = await controller.updatePassword(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
       );
-      if (res == "Inserted") {
-        return const Right("أهلا بعودتك");
-      }
-      if (res == "Existed") {
-        return const Left(
-          DataBaseFailure(
-            "هذا البريد مستخدم مسبقاً..الرجاء تسجيل الدخول أو التأكد منه",
-          ),
-        );
+      if (res == "Password changed") {
+        return const Right("تم تحديث كلمة المرور بنجاح");
       }
       if (kDebugMode) {
         print(res);
@@ -91,5 +88,42 @@ class ProfileRepository extends BaseProfileRepo {
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, String>> getData(
+      {required String email, required String password}) async {
+    try {
+      final res = await controller.getUserData(
+        email: email,
+        password: password,
+      );
+      if (res == "Wrong email or password" || res == "ErrorWithExecution") {
+        return const Left(
+          DataBaseFailure(
+            "حدث خطأ في جلب بياناتك،يمكنك إغادة تسجيل الدخول",
+          ),
+        );
+      }
+      final done = _saveData(json.decode(res));
+      if (done) {
+        return const Right("تم");
+      }
+      if (kDebugMode) {
+        print(res);
+      }
+      return const Left(ServerFailure("عذراً هناك خطأ غير متوقع"));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  bool _saveData(decode) {
+    if (decode["student"] != null && decode["student"].isNotEmpty) {
+      final user = UserModel.fromMap(decode["student"][0]);
+      user.saveUser();
+      return true;
+    }
+    return false;
   }
 }
