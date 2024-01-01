@@ -3,7 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'lecture_entity.g.dart';
 
-@HiveType(typeId: 2)
+@HiveType(typeId: 1)
 class LectureEntity extends Equatable {
   @HiveField(0)
   final int id;

@@ -20,7 +20,6 @@ class TeacherModel extends TeacherEntity {
   }
 
   factory TeacherModel.fromMap(Map<String, dynamic> map) {
-    print(map);
     return TeacherModel(
       id: map['id'],
       name: map['name'],

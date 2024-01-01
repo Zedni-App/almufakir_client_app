@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/utilities/validators.dart';
-import '../../../core/utilities/short_method.dart';
+
 import '../../../core/app_styles/size_config.dart';
+import '../../../core/app_styles/theme.dart';
 import '../../../core/enums.dart';
+import '../../../core/utilities/navigators.dart';
+import '../../../core/utilities/validators.dart';
 import '../components/logo_image.dart';
 import '../controller/login_bloc.dart';
-
-import '../../../core/app_styles/theme.dart';
 import 'forget_password.dart';
 import 'signup.dart';
 
@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lprimarycolor5,
+      backgroundColor: AppColors.lprimarycolor5,
       body: Form(
         key: _formKey,
         child: ListView(
@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         "هل نسيت كلمة السر؟ ",
                         style: TextStyle(
-                            color: lPrimaryColor1,
+                            color: AppColors.lPrimaryColor,
                             fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: const Text(
                       "إنشاء حساب",
                       style: TextStyle(
-                          color: lPrimaryColor1,
+                          color: AppColors.lPrimaryColor,
                           fontSize: 12,
                           fontWeight: FontWeight.bold),
                     ),
@@ -159,4 +159,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

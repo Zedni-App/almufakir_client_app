@@ -8,7 +8,7 @@ part of 'course_entity.dart';
 
 class CourseEntityAdapter extends TypeAdapter<CourseEntity> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   CourseEntity read(BinaryReader reader) {
@@ -22,8 +22,8 @@ class CourseEntityAdapter extends TypeAdapter<CourseEntity> {
       description: fields[2] as String,
       price: fields[7] as String,
       imageURL: fields[3] as String,
-      teacherID: fields[5] as int,
-      sectionID: fields[6] as int,
+      teacherName: fields[5] as String,
+      sectionName: fields[6] as String,
       isImageFromLocal: fields[4] as bool,
     );
   }
@@ -43,9 +43,9 @@ class CourseEntityAdapter extends TypeAdapter<CourseEntity> {
       ..writeByte(4)
       ..write(obj.isImageFromLocal)
       ..writeByte(5)
-      ..write(obj.teacherID)
+      ..write(obj.teacherName)
       ..writeByte(6)
-      ..write(obj.sectionID)
+      ..write(obj.sectionName)
       ..writeByte(7)
       ..write(obj.price);
   }

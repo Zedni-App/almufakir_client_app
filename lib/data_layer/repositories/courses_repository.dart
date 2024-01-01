@@ -1,11 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../core/failure_formatter.dart';
-import '../../domain_layer/entities/course_entity.dart';
 import '../../domain_layer/repository/base_courses_repo.dart';
 import '../controllers/courses_controller.dart';
+import '../hive_helper.dart';
+import '../models/combo_model.dart';
 import '../models/course_model.dart';
+import '../models/section_model.dart';
+import '../models/teacher_model.dart';
 
 class CoursesRepository extends BaseCoursesRepo {
   final CoursesController controller;
@@ -13,37 +15,14 @@ class CoursesRepository extends BaseCoursesRepo {
   CoursesRepository(this.controller);
 
   @override
-  Future<Either<Failure, String>> addCourse(
-      {required CourseEntity newCourse}) async {
-    try {
-      final res =
-          await controller.addCourse(course: CourseModel.fromEntity(newCourse));
-      if (res == "Course Added") {
-        return const Right("تمت الإضافة");
-      }
-      if (res == "Error With Adding Course") {
-        return const Left(
-          DataBaseFailure("عذراً، حدث خطأ في إضافة البيانات"),
-        );
-      }
-      if (kDebugMode) {
-        print(res);
-      }
-      return const Left(DataBaseFailure("عذراً هناك خطأ غير متوقع"));
-    } catch (e) {
-      return Left(formatFailure(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<CourseEntity>>> getCourses() async {
+  Future<Either<Failure, List<CourseModel>>> getCourses() async {
     try {
       final res = await controller.getCourses();
       final formatted = List.generate(
         res.length,
         (index) => CourseModel.fromMap(res[index]),
       );
-      // saveBooksData(formatted, kCourseBox);
+      saveBooksData(formatted, kCourseBox);
       return Right(formatted);
     } catch (e) {
       return Left(formatFailure(e));
@@ -51,49 +30,44 @@ class CoursesRepository extends BaseCoursesRepo {
   }
 
   @override
-  Future<Either<Failure, String>> deleteCourse({required int courseID}) async {
+  Future<Either<Failure, ComboModel>> getCombo() async {
     try {
-      final res = await controller.deleteCourse(courseID: courseID);
-      if (res == "courseDeleted") {
-        return const Right("تمت الإزالة");
-      }
-      if (res == "Error With Delete") {
-        return const Left(
-          DataBaseFailure("عذراً، حدث خطأ في الحذف"),
-        );
-      }
-      if (res == "Error: course Not Found") {
-        return const Left(
-          DataBaseFailure("تمت إزالة الدورة بالفعل مسبقاً"),
-        );
-      }
-      if (kDebugMode) {
-        print(res);
-      }
-      return const Left(DataBaseFailure("عذراً هناك خطأ غير متوقع"));
+      final res = await controller.getCombo();
+      final formatted = ComboModel.fromMap(res);
+      saveBooksData(formatted.courses, kCourseBox);
+      saveBooksData(formatted.sections, kSectionBox);
+      saveBooksData(formatted.teachers, kTeacherBox);
+      return Right(formatted);
     } catch (e) {
       return Left(formatFailure(e));
     }
   }
 
   @override
-  Future<Either<Failure, String>> editCourse(
-      {required CourseEntity newCourseData}) async {
+  Future<Either<Failure, List<SectionModel>>> getSections() async {
     try {
-      final res = await controller.editCourse(
-          course: CourseModel.fromEntity(newCourseData));
-      if (res == "CourseInfoUpdated") {
-        return const Right("تم تحديث البيانات");
-      }
-      if (res == "ErrorWithUpdating") {
-        return const Left(
-          DataBaseFailure("عذراً، حدث خطأ في تحديث البيانات"),
-        );
-      }
-      if (kDebugMode) {
-        print(res);
-      }
-      return const Left(DataBaseFailure("عذراً هناك خطأ غير متوقع"));
+      final res = await controller.getSections();
+      final formatted = List.generate(
+        res.length,
+        (index) => SectionModel.fromMap(res[index]),
+      );
+      saveBooksData(formatted, kSectionBox);
+      return Right(formatted);
+    } catch (e) {
+      return Left(formatFailure(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TeacherModel>>> getTeachers() async {
+    try {
+      final res = await controller.getTeachers();
+      final formatted = List.generate(
+        res.length,
+        (index) => TeacherModel.fromMap(res[index]),
+      );
+      saveBooksData(formatted, kTeacherBox);
+      return Right(formatted);
     } catch (e) {
       return Left(formatFailure(e));
     }

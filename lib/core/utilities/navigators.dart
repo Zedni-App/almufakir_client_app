@@ -1,26 +1,28 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as navigators;
 
 import '../../main.dart';
 
 showMessage(String message) {
-  ScaffoldMessenger.of(navKey.currentContext!).showSnackBar(
-    SnackBar(
-      content: Text(
+  navigators.ScaffoldMessenger.of(navKey.currentContext!).showSnackBar(
+    navigators.SnackBar(
+      content: navigators.Text(
         message,
-        textAlign: TextAlign.center,
+        textAlign: navigators.TextAlign.center,
       ),
       duration: const Duration(seconds: 3),
-      behavior: SnackBarBehavior.floating,
+      behavior: navigators.SnackBarBehavior.floating,
     ),
   );
 }
 
-Future pagePush(Widget newPage) async => await Navigator.push(
-    navKey.currentContext!, MaterialPageRoute(builder: (context) => newPage));
+Future pagePush(navigators.Widget newPage) async =>
+    await navigators.Navigator.push(navKey.currentContext!,
+        navigators.MaterialPageRoute(builder: (context) => newPage));
 
 dynamic pagePop([var x]) {
-  return Navigator.pop(navKey.currentContext!, x);
+  return navigators.Navigator.pop(navKey.currentContext!, x);
 }
 
-Future pageReplacement(Widget newPage) async => await Navigator.pushReplacement(
-    navKey.currentContext!, MaterialPageRoute(builder: (_) => newPage));
+Future pageReplacement(navigators.Widget newPage) async =>
+    await navigators.Navigator.pushReplacement(navKey.currentContext!,
+        navigators.MaterialPageRoute(builder: (_) => newPage));

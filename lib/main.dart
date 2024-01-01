@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zidne/presentation_layer/home/home_screen.dart';
-import 'package:zidne/presentation_layer/login/screens/login.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'core/app_styles/theme.dart';
 import 'core/utilities/service_locator.dart';
+import 'data_layer/hive_helper.dart';
 import 'data_layer/shared_preferences.dart';
+import 'presentation_layer/home/controller/home_bloc.dart';
+import 'presentation_layer/home/screens/home_screen.dart';
 import 'presentation_layer/login/controller/login_bloc.dart';
+import 'presentation_layer/login/screens/login.dart';
+import 'presentation_layer/profile/controller/profile_bloc.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppSp.init();
   ServicesLocator().init();
+  await sl<DotEnv>().load();
+  await initHive();
   runApp(const MyApp());
 }
 
@@ -25,28 +31,23 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
+        BlocProvider(create: (_) => HomeBloc()),
+        BlocProvider(create: (_) => ProfileBloc()),
       ],
-      child: MaterialApp(
-        title: 'Zidne',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-          useMaterial3: true,
-          buttonTheme: ButtonThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: lPrimaryColor1),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(lPrimaryColor1),
-            ),
-          ),
-        ),
-        navigatorKey: navKey,
-        builder: (context, child) =>
-            Directionality(textDirection: TextDirection.rtl, child: child!),
-        home: AppSp.getBool(SPVars.loggedIn)
-            ? const HomeScreen()
-            : const LoginScreen(),
+      child: BlocBuilder<ProfileBloc, ProfileState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Almufakir',
+            debugShowCheckedModeBanner: false,
+            theme: getTheme(context.read<ProfileBloc>().isDark),
+            navigatorKey: navKey,
+            builder: (context, child) =>
+                Directionality(textDirection: TextDirection.rtl, child: child!),
+            home: AppSp.getBool(SPVars.loggedIn)
+                ? const HomeScreen()
+                : const LoginScreen(),
+          );
+        },
       ),
     );
   }

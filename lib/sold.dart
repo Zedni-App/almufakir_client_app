@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class Sold extends StatefulWidget {
   const Sold({Key? key}) : super(key: key);
@@ -11,6 +10,6 @@ class Sold extends StatefulWidget {
 class _SoldState extends State<Sold> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Sold")));
+    return const Scaffold(body: Center(child: Text("Sold")));
   }
 }

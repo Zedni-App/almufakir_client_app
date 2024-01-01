@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/app_styles/size_config.dart';
-import '../../../core/app_styles/theme.dart';
+import '../../../../core/app_styles/size_config.dart';
+import '../../../../core/app_styles/theme.dart';
 
 class MainScreenViews extends StatelessWidget {
   const MainScreenViews(this.title, this.image, {super.key});
@@ -21,7 +21,7 @@ class MainScreenViews extends StatelessWidget {
           FittedBox(
             child: Container(
               decoration: BoxDecoration(
-                color: kComplementColor2.withOpacity(0.3),
+                color: AppColors.kComplementColor2.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(3),
               ),
               padding: EdgeInsets.symmetric(
@@ -34,7 +34,7 @@ class MainScreenViews extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: kPrimaryColor2,
+                  color: AppColors.kPrimaryColor,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

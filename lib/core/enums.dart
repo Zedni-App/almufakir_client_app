@@ -1,4 +1,3 @@
-
 enum ProcessState { idle, processing, waitingForOTP, failed, done }
 
 enum Provinces {
@@ -24,4 +23,16 @@ enum Provinces {
       Provinces.values.firstWhere((element) => element.index == index);
 
   const Provinces({required this.inArabic});
+}
+
+enum Edits {
+  image(inArabic: "تعديل الصورة"),
+  name(inArabic: "تعديل الاسم"),
+  phone(inArabic: "تعديل الرقم"),
+  email(inArabic: "تعديل البريد"),
+  password(inArabic: "تعديل كلمة السر");
+
+  final String inArabic;
+
+  const Edits({required this.inArabic});
 }

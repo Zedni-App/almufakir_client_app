@@ -17,7 +17,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: lprimarycolor5,
+      backgroundColor: AppColors.lprimarycolor5,
       body: ListView(
         children: [
           SizedBox(

@@ -8,7 +8,7 @@ part of 'lecture_entity.dart';
 
 class LectureEntityAdapter extends TypeAdapter<LectureEntity> {
   @override
-  final int typeId = 2;
+  final int typeId = 1;
 
   @override
   LectureEntity read(BinaryReader reader) {
@@ -16,6 +16,7 @@ class LectureEntityAdapter extends TypeAdapter<LectureEntity> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
+  
     return LectureEntity(
       id: fields[0] as int,
       courseID: fields[1] as int,

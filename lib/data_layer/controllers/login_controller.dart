@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../dio_helper.dart';
+import '../models/user_model.dart';
 
 class LoginController {
   final DioHelper dio;
@@ -12,7 +13,7 @@ class LoginController {
     required String password,
   }) async {
     final value = await dio.postData(
-      url: 'student_login.php',
+      url: 'students/student_login.php',
       data: FormData.fromMap(
         {
           'email': email,
@@ -23,20 +24,10 @@ class LoginController {
     return value!.data;
   }
 
-  Future<String> register({
-    required String email,
-    required String name,
-    required String password,
-  }) async {
+  Future<String> register(UserModel user) async {
     final value = await dio.postData(
-      url: 'student_register.php',
-      data: FormData.fromMap(
-        {
-          'email': email,
-          'name': name,
-          'password': password,
-        },
-      ),
+      url: 'students/student_register.php',
+      data: FormData.fromMap(user.toMap()),
     );
 
     return value!.data;

@@ -7,8 +7,8 @@ class CourseModel extends CourseEntity {
     required super.description,
     required super.imageURL,
     required super.price,
-    required super.teacherID,
-    required super.sectionID,
+    required super.teacherName,
+    required super.sectionName,
     super.isImageFromLocal,
   });
 
@@ -18,22 +18,21 @@ class CourseModel extends CourseEntity {
       'name': name,
       'description': description,
       'image': imageURL,
-      'teacher': teacherID,
+      'teacher': teacherName,
       'price': price,
-      'section_id': sectionID,
+      'section_id': sectionName,
     };
   }
 
   factory CourseModel.fromMap(Map<String, dynamic> map) {
-    print(map);
     return CourseModel(
       id: map['id'],
       name: map['name'],
       description: map['description'] ?? "",
       price: map['price'],
       imageURL: map['image'] ?? "",
-      teacherID: map['teacher_id'],
-      sectionID: map['section'] ?? 1,
+      teacherName: map['teacher'],
+      sectionName: map['section'] ?? 1,
     );
   }
 
@@ -45,8 +44,8 @@ class CourseModel extends CourseEntity {
       imageURL: course.imageURL,
       isImageFromLocal: course.isImageFromLocal,
       price: course.price,
-      teacherID: course.teacherID,
-      sectionID: course.sectionID,
+      teacherName: course.teacherName,
+      sectionName: course.sectionName,
     );
   }
 }

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:zedni/screens/screens.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newtons_cradle_loading_indicator/newtons_cradle_loading_indicator.dart';
+import 'package:zidne/presentation_layer/home/components/course_view.dart';
+import 'package:zidne/presentation_layer/home/controller/home_bloc.dart';
 
-class Course_Content extends StatefulWidget {
-  const Course_Content({Key? key}) : super(key: key);
+import 'presentation_layer/home/components/custom_error_widget.dart';
+
+class CourseContent extends StatefulWidget {
+  const CourseContent({Key? key}) : super(key: key);
 
   @override
-  State<Course_Content> createState() => _Course_ContentState();
+  State<CourseContent> createState() => _CourseContentState();
 }
 
-class _Course_ContentState extends State<Course_Content> {
+class _CourseContentState extends State<CourseContent> {
   String elementnamea1 = "رياضيات";
   String elementnamea2 = "فيزياء";
   String elementnamea3 = "كيمياء";
@@ -21,45 +26,45 @@ class _Course_ContentState extends State<Course_Content> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
-        body: Container(
-      padding: EdgeInsets.all(size.width * 0.04),
-      child: GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: size.width * 0.04,
-            crossAxisSpacing: size.width * 0.04),
-        children: [
-          elementsCourse(elementnamea1),
-          elementsCourse(elementnamea2),
-          elementsCourse(elementnamea3),
-          elementsCourse(elementnamea4),
-        ],
-      ),
+        body: BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (p, c) =>
+          c is LoadingCoursesState ||
+          c is LoadingCoursesDoneState ||
+          c is LoadingCoursesFailedState,
+      builder: (context, state) {
+        if (state is LoadingCoursesState) {
+          return const NewtonLoadingIndicator();
+        }
+        if (state is LoadingCoursesFailedState) {
+          return CustomErrorWidget(
+            primaryMessage: state.errorMessage,
+            retryFun: () => context.read<HomeBloc>().add(GetCourses()),
+          );
+        }
+        if (state is LoadingCoursesDoneState && state.data.courses.isEmpty) {
+          return CustomErrorWidget(
+            primaryMessage: "لم يتم نحميل الدورات أعد المحاولة",
+            retryFun: () => context.read<HomeBloc>().add(GetCourses()),
+          );
+        }
+        if (state is LoadingCoursesDoneState) {
+          return GridView.builder(
+            padding: const EdgeInsets.all(8),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
+            ),
+            itemCount: state.data.courses.length,
+            itemBuilder: (_, index) {
+              return CourseView(state.data.courses[index]);
+            },
+          );
+        }
+        context.read<HomeBloc>().add(GetCourses());
+        return const NewtonLoadingIndicator();
+      },
     ));
-  }
-
-  Widget elementsCourse(String elementname) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-        child: Center(
-          child: Text(
-            elementname,
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ),
-        width: size.width * 0.8,
-        height: size.height * 0.8,
-        decoration: BoxDecoration(
-          border: Border.all(color: lprimarycolor2, width: 3),
-          image: DecorationImage(
-            image: AssetImage("assets/images/scourse.jpg"),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(Colors.black54, BlendMode.darken),
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(size.width * 0.03)),
-        ));
   }
 }

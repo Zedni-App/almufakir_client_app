@@ -1,6 +1,6 @@
-import 'package:warsha_management/utils/constant.dart';
 import 'package:flutter/material.dart';
-import '../my_circle_avatar.dart';
+
+import 'presentation_layer/components/my_circle_avatar.dart';
 
 class NotificationItem extends StatefulWidget {
   final String title;
@@ -21,11 +21,11 @@ class NotificationItem extends StatefulWidget {
 }
 
 class _NotificationItemState extends State<NotificationItem> {
-  late bool isSelected= false;
+  late bool isSelected = false;
 
   @override
   void initState() {
-    isSelected =false;
+    isSelected = false;
     // TODO: implement initState
     super.initState();
   }
@@ -34,20 +34,18 @@ class _NotificationItemState extends State<NotificationItem> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 1500),
-      padding:const EdgeInsets.all(8),
-      margin:const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.black12,
-
       ),
       child: Column(
         children: [
           ListTile(
             leading: const MyCircleAvatar(
               width: 32,
-              image: Constant.avatarImageTestUrl,
-
+              image: " Constant.avatarImageTestUrl",
             ),
             title: Text(
               widget.title,
@@ -66,20 +64,27 @@ class _NotificationItemState extends State<NotificationItem> {
               ),
             ),
             trailing: InkWell(
-              onTap:()=> setState(() {
+              onTap: () => setState(() {
                 isSelected = !isSelected;
               }),
               child: CircleAvatar(
                 radius: 16,
                 backgroundColor: Colors.black12,
-                child: Icon(!isSelected?Icons.keyboard_arrow_down:Icons.keyboard_arrow_up,size: 28,color: Colors.black54,),
+                child: Icon(
+                  !isSelected
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_up,
+                  size: 28,
+                  color: Colors.black54,
+                ),
               ),
             ),
           ),
-          if(isSelected)
-          Image.network(Constant.carIconTestUrl ,height: 150, )
-
-
+          if (isSelected)
+            Image.network(
+              "Constant.carIconTestUrl,",
+              height: 150,
+            )
         ],
       ),
     );

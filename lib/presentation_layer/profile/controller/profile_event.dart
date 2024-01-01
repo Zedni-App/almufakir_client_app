@@ -4,26 +4,50 @@ abstract class ProfileEvent {
   const ProfileEvent();
 }
 
-class PickImage extends ProfileEvent {
-  final bool fromGallery;
+class ShowHidePass extends ProfileEvent {
+  final bool show;
 
-  PickImage(this.fromGallery);
+  ShowHidePass(this.show);
+}
+
+class UpdateUserName extends ProfileEvent {
+  final String newName;
+  final String newNick;
+
+  UpdateUserName({required this.newName, required this.newNick});
 }
 
 class UpdateUserImage extends ProfileEvent {
-  final File newImage;
+  final bool fromGallery;
 
-  UpdateUserImage(this.newImage);
+  UpdateUserImage(this.fromGallery);
 }
 
-class UpdateUserData extends ProfileEvent {
- final UserEntity newData;
+class UpdateUserEmail extends ProfileEvent {
+  final String newEmail;
 
-  UpdateUserData(this.newData);
+  UpdateUserEmail({required this.newEmail});
+}
+
+class UpdateUserPhone extends ProfileEvent {
+  final String newPhone;
+
+  UpdateUserPhone({required this.newPhone});
+}
+
+class UpdateUserPassword extends ProfileEvent {
+  final String oldPass;
+  final String newPass;
+
+  UpdateUserPassword({required this.oldPass, required this.newPass});
 }
 
 class GetUserData extends ProfileEvent {
   final String userEmail;
 
   GetUserData(this.userEmail);
+}
+
+class InvertAppMode extends ProfileEvent {
+  InvertAppMode();
 }

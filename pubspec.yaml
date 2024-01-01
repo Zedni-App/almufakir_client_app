@@ -1,6 +1,6 @@
 name: zidne
 description: A new Flutter project.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
@@ -19,16 +19,28 @@ dependencies:
   image_cropper: ^5.0.0
   image_picker: ^1.0.4
   flutter_image_compress: ^2.0.4
+  awesome_dialog: ^3.1.0
+  cached_network_image: ^3.3.0
+  flutter_dotenv: ^5.1.0
+  hive_flutter: ^1.1.0
+  carousel_slider: ^4.2.1
+  video_player: ^2.8.1
+  newtons_cradle_loading_indicator:  ^0.0.5
+  flutter_svg: ^2.0.7
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
+  hive_generator:
+  build_runner:
 flutter:
   uses-material-design: true
 
   assets:
+    - .env
     - assets/images/
   # fonts:
   #   - family: Schyler

@@ -8,7 +8,7 @@ part of 'teacher_entity.dart';
 
 class TeacherEntityAdapter extends TypeAdapter<TeacherEntity> {
   @override
-  final int typeId = 4;
+  final int typeId = 3;
 
   @override
   TeacherEntity read(BinaryReader reader) {

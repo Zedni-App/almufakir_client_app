@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain_layer/entities/course_entity.dart';
+import '../../../domain_layer/entities/course_entity.dart';
 
 class CourseViewScreen extends StatelessWidget {
   const CourseViewScreen(this.course, {super.key});
@@ -9,6 +9,6 @@ class CourseViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:zidne/core/utilities/validators.dart';
-import 'package:zidne/presentation_layer/login/components/logo_image.dart';
+
 import '../../../core/app_styles/size_config.dart';
+import '../../../core/app_styles/theme.dart';
 import '../../../core/enums.dart';
-import '../../../core/utilities/short_method.dart';
+import '../../../core/utilities/navigators.dart';
+import '../../../core/utilities/validators.dart';
+import '../../../domain_layer/entities/user_entity.dart';
+import '../components/logo_image.dart';
 import '../controller/login_bloc.dart';
 import 'login.dart';
-import '../../../core/app_styles/theme.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -18,14 +20,16 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final emailCtrl = TextEditingController();
-  final nameCtrl = TextEditingController();
+  final fNameCtrl = TextEditingController();
+  final lNameCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   final confirmPasswordCtrl = TextEditingController();
 
   @override
   void dispose() {
     emailCtrl.dispose();
-    nameCtrl.dispose();
+    fNameCtrl.dispose();
+    lNameCtrl.dispose();
     passwordCtrl.dispose();
     confirmPasswordCtrl.dispose();
     super.dispose();
@@ -36,14 +40,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: lprimarycolor5,
+      backgroundColor: AppColors.lprimarycolor5,
       body: Form(
         key: _formKey,
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           children: [
             const LogoImage(),
-            name(),
+            fName(),
+            SizedBox(height: percentHeight(0.020)),
+            lName(),
             SizedBox(height: percentHeight(0.020)),
             email(),
             SizedBox(height: percentHeight(0.020)),
@@ -68,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: const Text(
                     "تسجيل الدخول",
                     style: TextStyle(
-                      color: lPrimaryColor1,
+                      color: AppColors.lPrimaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -83,16 +89,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  TextFormField name() {
+  TextFormField fName() {
     return TextFormField(
-      maxLines: 1,
       keyboardType: TextInputType.name,
-      controller: nameCtrl,
+      controller: fNameCtrl,
       validator: defaultValidator,
       textInputAction: TextInputAction.next,
       decoration: const InputDecoration(
         prefixIcon: Icon(Icons.person),
-        hintText: "اسم المستخدم",
+        hintText: "الإسم",
+        border: OutlineInputBorder(
+            borderSide: BorderSide(
+          width: 2,
+        )),
+      ),
+    );
+  }
+
+  TextFormField lName() {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      controller: lNameCtrl,
+      validator: defaultValidator,
+      textInputAction: TextInputAction.next,
+      decoration: const InputDecoration(
+        prefixIcon: Icon(Icons.person),
+        hintText: "الكنية",
         border: OutlineInputBorder(
             borderSide: BorderSide(
           width: 2,
@@ -103,7 +125,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   TextFormField email() {
     return TextFormField(
-      maxLines: 1,
       keyboardType: TextInputType.emailAddress,
       controller: emailCtrl,
       textInputAction: TextInputAction.next,
@@ -125,7 +146,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (context, state) {
         final bloc = BlocProvider.of<LoginBloc>(context);
         return TextFormField(
-          maxLines: 1,
           keyboardType: TextInputType.text,
           controller: passwordCtrl,
           validator: passValidator,
@@ -151,11 +171,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       builder: (context, state) {
         final bloc = BlocProvider.of<LoginBloc>(context);
         return TextFormField(
-          maxLines: 1,
           controller: confirmPasswordCtrl,
           keyboardType: TextInputType.text,
-          validator: (value){
-            if(value!=passwordCtrl.text){
+          validator: (value) {
+            if (value != passwordCtrl.text) {
               return "لا تطابق كلمة المرور في الحقل السابق";
             }
             return null;
@@ -193,10 +212,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               return;
             }
             context.read<LoginBloc>().add(RegisterEvent(
+                    newUser: UserEntity.newUser(
                   email: emailCtrl.text,
-                  name: nameCtrl.text,
+                  fName: fNameCtrl.text,
+                  lName: lNameCtrl.text,
                   password: passwordCtrl.text,
-                ));
+                )));
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: percentHeight(0.02)),

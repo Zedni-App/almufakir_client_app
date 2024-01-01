@@ -25,14 +25,25 @@ class AppSp {
     return await _sp.setBool(key, value);
   }
 
-  static String getString(String key) => _sp.getString(key) ?? "";
+  static String? getString(String key) => _sp.getString(key);
 
   static int? getInt(String key) => _sp.getInt(key);
+
   static double getDouble(String key) => _sp.getDouble(key) ?? -1;
 
   static bool getBool(String key) => _sp.getBool(key) ?? false;
 }
 
-abstract class SPVars{
-  static const loggedIn="loggedIn";
+abstract class SPVars {
+  static const isDark = "is_dark";
+  static const loggedIn = "loggedIn";
+  static const userID = "user_id";
+  static const userEmail = "user_email";
+  static const userName = "user_name";
+  static const userNick = "user_last_name";
+  static const userPhone = "user_phone";
+  static const userRate = "user_rate";
+  static const userRegDate = "user_reg_date";
+  static const userImageURL = "user_image";
+  static const videoMoveValue = "videoMoveValue";
 }

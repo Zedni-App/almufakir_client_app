@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:zidne/data_layer/dio_helper.dart';
 import 'package:zidne/data_layer/models/user_model.dart';
 import 'package:zidne/domain_layer/entities/user_entity.dart';
 
@@ -51,15 +52,9 @@ class ProfileRepository extends BaseProfileRepo {
       final res = await controller.updatePhoto(
         image: image,
       );
-      if (res == "Inserted") {
-        return const Right("أهلا بعودتك");
-      }
-      if (res == "Existed") {
-        return const Left(
-          DataBaseFailure(
-            "هذا البريد مستخدم مسبقاً..الرجاء تسجيل الدخول أو التأكد منه",
-          ),
-        );
+      final decoded = json.decode(res);
+      if (decoded["status"] == "Image Updated") {
+        return Right("${DioHelper.baseURL}${decoded["image"]}");
       }
       if (kDebugMode) {
         print(res);
@@ -83,7 +78,7 @@ class ProfileRepository extends BaseProfileRepo {
       }
       if (kDebugMode) {
         print(res);
-      }
+      } //Wrong ID or current password
       return const Left(ServerFailure("عذراً هناك خطأ غير متوقع"));
     } catch (e) {
       return Left(ServerFailure(e.toString()));

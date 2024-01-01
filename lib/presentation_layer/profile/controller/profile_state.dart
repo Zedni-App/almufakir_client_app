@@ -9,13 +9,61 @@ class ProfileInitial extends ProfileState {
   List<Object?> get props => [];
 }
 
-class UpdateUserDataState extends ProfileState {
+class UpdateUserNameState extends ProfileState {
   final ProcessState processState;
   final String resultMessage;
 
-  const UpdateUserDataState({
+  const UpdateUserNameState({
     required this.processState,
-    required this.resultMessage,
+    this.resultMessage = "",
+  });
+
+  @override
+  List<Object> get props => [
+        processState,
+        resultMessage,
+      ];
+}
+
+class UpdateUserPassState extends ProfileState {
+  final ProcessState processState;
+  final String resultMessage;
+
+  const UpdateUserPassState({
+    required this.processState,
+    this.resultMessage = "",
+  });
+
+  @override
+  List<Object> get props => [
+        processState,
+        resultMessage,
+      ];
+}
+
+class UpdateUserEmailState extends ProfileState {
+  final ProcessState processState;
+  final String resultMessage;
+
+  const UpdateUserEmailState({
+    required this.processState,
+    this.resultMessage = "",
+  });
+
+  @override
+  List<Object> get props => [
+        processState,
+        resultMessage,
+      ];
+}
+
+class UpdateUserPhoneState extends ProfileState {
+  final ProcessState processState;
+  final String resultMessage;
+
+  const UpdateUserPhoneState({
+    required this.processState,
+    this.resultMessage = "",
   });
 
   @override
@@ -31,7 +79,7 @@ class UpdateUserImageState extends ProfileState {
 
   const UpdateUserImageState({
     required this.processState,
-    required this.resultMessage,
+    this.resultMessage = "",
   });
 
   @override
@@ -47,7 +95,7 @@ class GetUserDataState extends ProfileState {
 
   const GetUserDataState({
     required this.processState,
-    required this.resultMessage,
+    this.resultMessage = "",
   });
 
   @override
@@ -58,6 +106,18 @@ class GetUserDataState extends ProfileState {
 }
 
 class InvertPassHideState extends ProfileState {
+  final bool show;
+
+  const InvertPassHideState(this.show);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [show];
+}
+
+class AppThemeChanged extends ProfileState {
+  final bool isDark;
+
+  const AppThemeChanged({required this.isDark});
+  @override
+  List<Object?> get props => [isDark];
 }

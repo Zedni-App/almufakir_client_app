@@ -24,4 +24,14 @@ class RegisterRequest extends LoginState {
   });
 }
 
+class GetUserDataRequest extends LoginState {
+  final ProcessState requestState;
+  final String resultMessage;
+
+  GetUserDataRequest({
+    required this.requestState,
+    this.resultMessage = '',
+  });
+}
+
 class InvertPassHideState extends LoginState {}

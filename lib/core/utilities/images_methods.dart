@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -7,10 +8,21 @@ import 'package:image_picker/image_picker.dart';
 
 import '../app_styles/theme.dart';
 
+Future<File?> pickProfileImage(bool fromGallery) async {
+  final pickedImage = await pickImage(fromGallery);
+  if (pickedImage == null) return null;
+  final croppedImage = await cropImage(pickedImage);
+  final compressedImage = await compressImage(croppedImage, pickedImage);
+  return File(
+    compressedImage?.path ?? croppedImage?.path ?? pickedImage.path,
+  );
+}
+
 Future<XFile?> pickImage(bool fromGallery) async {
   return await ImagePicker().pickImage(
       source: fromGallery ? ImageSource.gallery : ImageSource.camera);
 }
+
 Future<CroppedFile?> cropImage(XFile pickedFile) async {
   return await ImageCropper().cropImage(
     sourcePath: pickedFile.path,
@@ -18,7 +30,7 @@ Future<CroppedFile?> cropImage(XFile pickedFile) async {
     uiSettings: [
       AndroidUiSettings(
         toolbarTitle: 'إقتصاص الصورة',
-        toolbarColor: lPrimaryColor1,
+        toolbarColor: AppColors.kPrimaryColor,
         toolbarWidgetColor: Colors.white,
         lockAspectRatio: true,
       ),
@@ -32,8 +44,7 @@ Future<CroppedFile?> cropImage(XFile pickedFile) async {
   );
 }
 
-Future<XFile?> compressImage(
-    CroppedFile? croppedFile, XFile pickedFile) async {
+Future<XFile?> compressImage(CroppedFile? croppedFile, XFile pickedFile) async {
   final String targetPath = getTargetPath(croppedFile, pickedFile);
   return await FlutterImageCompress.compressAndGetFile(
     croppedFile?.path ?? pickedFile.path,

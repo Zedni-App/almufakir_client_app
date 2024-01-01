@@ -21,25 +21,25 @@ class LoginEvent extends LoginEvents {
 }
 
 class RegisterEvent extends LoginEvents {
-  final String email;
-  final String name;
-  final String password;
+  final UserEntity newUser;
 
-  const RegisterEvent({
-    required this.email,
-    required this.name,
-    required this.password,
-  });
+  const RegisterEvent({required this.newUser});
 
   @override
-  List<Object?> get props => [
-    email,
-    name,
-    password,
-  ];
+  List<Object?> get props => [newUser];
 }
+
 class InvertShowPass extends LoginEvents {
   @override
   List<Object?> get props => [];
 }
 
+class GetUserDataEvent extends LoginEvents {
+  final String email;
+  final String password;
+
+  const GetUserDataEvent({required this.email, required this.password});
+
+  @override
+  List<Object> get props => [email, password];
+}

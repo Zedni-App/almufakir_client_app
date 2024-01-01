@@ -2,95 +2,53 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/app_styles/size_config.dart';
-import '../../../core/app_styles/theme.dart';
+import '../../../core/enums.dart';
+import '../../../core/utilities/navigators.dart';
 import '../controller/profile_bloc.dart';
+import '../screens/profile_edit_email.dart';
+import '../screens/profile_edit_name.dart';
+import '../screens/profile_edit_password.dart';
+import '../screens/profile_edit_phone.dart';
+import 'image_source_selector.dart';
 
-class EditImageIcon extends StatelessWidget {
-  const EditImageIcon({super.key});
+class EditProfileIcon extends StatelessWidget {
+  const EditProfileIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        final res = await _selectImageSource(context);
-        if (res == null) return; //no select
-        if (context.mounted) {
-          context.read<ProfileBloc>().add(PickImage(fromGallery: res));
-        }
-      },
-      child: Container(
-        height: 50,
-        width: 50,
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: kComplementColor2,
-        ),
-        child: const Icon(
-          CupertinoIcons.pen,
-          size: 30,
-        ),
+    return PopupMenuButton(
+      itemBuilder: (_) => Edits.values
+          .map((e) => PopupMenuItem(value: e, child: Text(e.inArabic)))
+          .toList(),
+      icon: const Icon(
+        CupertinoIcons.pen,
       ),
+      iconSize: 30,
+      onSelected: (value) => _takeAction(value, context),
     );
   }
 
-  Future<bool?> _selectImageSource(BuildContext context) async {
-    bool userChose = false;
-    bool fromGallery = false;
-    await showModalBottomSheet(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15), topRight: Radius.circular(15))),
-      context: context,
-      builder: (context) => SizedBox(
-        height: percentHeight(0.3),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(right: 2),
-                  child: IconButton(
-                      icon: const Icon(
-                        CupertinoIcons.camera_fill,
-                        size: 35,
-                        color: kComplementColor2,
-                      ),
-                      onPressed: () {
-                        userChose = true;
-                        // fromGallery=false; already false
-                        Navigator.pop(context);
-                      }),
-                ),
-                Text(
-                  "الكاميرا",
-                  style: Theme.of(context).textTheme.titleMedium,
-                )
-              ],
-            ),
-            Column(children: [
-              IconButton(
-                  icon: const Icon(
-                    CupertinoIcons.photo_fill_on_rectangle_fill,
-                    size: 35,
-                    color: kComplementColor2,
-                  ),
-                  onPressed: () {
-                    userChose = true;
-                    fromGallery = true;
-                    Navigator.pop(context);
-                  }),
-              Text(
-                "المعرض",
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ]),
-          ],
-        ),
-      ),
-    );
-    if (!userChose) return null;
-    return fromGallery;
+  void _takeAction(Edits value, BuildContext context) async {
+    switch (value) {
+      case Edits.image:
+        final fromGallery = await selectImageSource(context);
+        if (fromGallery == null) return; //no select
+        if (context.mounted) {
+          context.read<ProfileBloc>().add(UpdateUserImage(fromGallery));
+        }
+        return;
+      case Edits.name:
+        pagePush(const ProfileEditName());
+        return;
+      case Edits.phone:
+        pagePush(const ProfileEditPhone());
+        return;
+      case Edits.email:
+        pagePush(const ProfileEditEmail());
+        return;
+      case Edits.password:
+        pagePush(const ProfileEditPassword());
+        return;
+    }
   }
 }

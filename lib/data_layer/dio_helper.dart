@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
+
 class DioHelper {
   late final Dio _dio;
-  final baseURL="http://zedny-3lma.coolpage.biz/api/";
+  static const baseURL = "https://almufakir.000webhostapp.com/";
 
-  DioHelper(){
-    _dio=Dio(
+  DioHelper() {
+    _dio = Dio(
       BaseOptions(
         followRedirects: false,
         validateStatus: (status) => true,
-        baseUrl:
-        "http://zedny-3lma.coolpage.biz/api/",
+        baseUrl: baseURL,
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
@@ -17,6 +17,7 @@ class DioHelper {
       ),
     );
   }
+
   //  init() {
   //   _dio = Dio(
   //     BaseOptions(
@@ -31,14 +32,13 @@ class DioHelper {
   //   );
   // }
 
-   Future<Response?> getData({
+  Future<Response?> getData({
     required String url,
     Map<String, dynamic>? query,
-    String ? bearerToken,
+    String? bearerToken,
   }) async {
     _dio.options.headers = {
-      if(bearerToken != null)
-        'Authorization':'Bearer $bearerToken',
+      if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
     };
     return await _dio.get(
       url,
@@ -46,93 +46,83 @@ class DioHelper {
     );
   }
 
-   Future<Response?> download({
+  Future<Response?> download({
     required String url,
     required String path,
-    String ? bearerToken,
+    String? bearerToken,
     Map<String, dynamic>? query,
   }) async {
     _dio.options.headers = {
-      if(bearerToken != null)
-        'Authorization':'Bearer $bearerToken',
+      if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
     };
     return await _dio.download(
       url,
-      path ,
+      path,
       queryParameters: query,
     );
   }
 
-
-   Future<Response?> postData({
+  Future<Response?> postData({
     required String url,
     Map<String, dynamic>? query,
-     dynamic data,
-    String ? bearerToken,
+    dynamic data,
+    String? bearerToken,
   }) async {
     _dio.options.headers = {
-      if(bearerToken != null)
-        'Authorization':'Bearer $bearerToken',
+      if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
     };
     return await _dio.post(
       url,
       queryParameters: query,
       data: data,
-
     );
   }
 
-   Future<Response?> patchData({
+  Future<Response?> patchData({
     required String url,
     Map<String, dynamic>? query,
     dynamic data,
-    String ? bearerToken,
+    String? bearerToken,
   }) async {
     _dio.options.headers = {
-      if(bearerToken != null)
-        'Authorization':'Bearer $bearerToken',
+      if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
     };
     return await _dio.patch(
       url,
       queryParameters: query,
       data: data,
-
     );
   }
 
-
-   Future<Response?> deleteData({
+  Future<Response?> deleteData({
     required String url,
     Map<String, dynamic>? query,
     dynamic data,
-    String ? bearerToken,
+    String? bearerToken,
   }) async {
     _dio.options.headers = {
-      if(bearerToken != null)
-        'Authorization':'Bearer $bearerToken',
+      if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
     };
     return await _dio.delete(
       url,
       queryParameters: query,
       data: data,
-
     );
   }
-   Future<Response?> putData({
+
+  Future<Response?> putData({
     required String url,
     Map<String, dynamic>? query,
     dynamic data,
-    String ? bearerToken,
+    String? bearerToken,
   }) async {
     _dio.options.headers = {
-      if(bearerToken != null)
-        'Authorization':'Bearer $bearerToken',
+      if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
     };
     return await _dio.put(
       url,
       queryParameters: query,
       data: data,
-
     );
   }
 
@@ -167,5 +157,4 @@ class DioHelper {
 
     );
   }*/
-
 }

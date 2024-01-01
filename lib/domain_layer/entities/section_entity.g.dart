@@ -8,7 +8,7 @@ part of 'section_entity.dart';
 
 class SectionEntityAdapter extends TypeAdapter<SectionEntity> {
   @override
-  final int typeId = 3;
+  final int typeId = 2;
 
   @override
   SectionEntity read(BinaryReader reader) {
@@ -21,13 +21,14 @@ class SectionEntityAdapter extends TypeAdapter<SectionEntity> {
       name: fields[1] as String,
       description: fields[2] as String,
       price: fields[3] as int,
+      image: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, SectionEntity obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class SectionEntityAdapter extends TypeAdapter<SectionEntity> {
       ..writeByte(2)
       ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.price);
+      ..write(obj.price)
+      ..writeByte(4)
+      ..write(obj.image);
   }
 
   @override

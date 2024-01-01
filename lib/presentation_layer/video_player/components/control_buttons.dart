@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:zidne_admin_app/core/utilities/short_method.dart';
 
-import '../../../../core/app_styles/theme.dart';
 import '../../../../data_layer/shared_preferences.dart';
+import '../../../core/app_styles/theme.dart';
+import '../../../core/utilities/navigators.dart';
 
 class ControlButtons extends StatelessWidget {
   ControlButtons(this.controller, {super.key});
