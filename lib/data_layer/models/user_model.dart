@@ -1,3 +1,4 @@
+import 'package:zidne/data_layer/dio_helper.dart';
 import 'package:zidne/data_layer/shared_preferences.dart';
 
 import '../../domain_layer/entities/user_entity.dart';
@@ -27,14 +28,16 @@ class UserModel extends UserEntity {
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
+    
+  
     return UserModel(
       id: map['id'] as int,
-      fName: map['fname'] as String,
-      lName: map['lname'] as String,
+      fName: map['fname'] ?? "",
+      lName: map['lname'] ?? "",
       email: map['email'] as String,
       phone: map['phone'] ?? "",
       password: "",
-      imageUrl: map['imageUrl'] ?? "",
+      imageUrl: DioHelper.baseURL + map['image'],
       regDate: map['reg_date'] as String,
     );
   }

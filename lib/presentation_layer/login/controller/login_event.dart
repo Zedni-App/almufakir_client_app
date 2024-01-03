@@ -34,12 +34,3 @@ class InvertShowPass extends LoginEvents {
   List<Object?> get props => [];
 }
 
-class GetUserDataEvent extends LoginEvents {
-  final String email;
-  final String password;
-
-  const GetUserDataEvent({required this.email, required this.password});
-
-  @override
-  List<Object> get props => [email, password];
-}

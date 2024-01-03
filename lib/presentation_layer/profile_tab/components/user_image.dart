@@ -16,6 +16,7 @@ class UserImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(appUser.imageUrl);
     return Container(
       width: percentWidth(0.4),
       height: percentHeight(0.3),

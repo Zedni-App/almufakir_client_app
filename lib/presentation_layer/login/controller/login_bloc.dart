@@ -21,12 +21,13 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
     on<LoginEvent>(_login);
     on<RegisterEvent>(_register);
     on<InvertShowPass>(_invertShowState);
-    on<GetUserDataEvent>(_getData);
+  
   }
 
   bool hidePass = true;
 
   FutureOr<void> _login(LoginEvent event, Emitter<LoginState> emit) async {
+    
     emit(LoginRequest(requestState: ProcessState.processing));
     final res = await sl<LoginUserUseCase>()
         .call(email: event.email, password: event.password);
@@ -45,7 +46,10 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
         AppSp.setBool(key: SPVars.loggedIn, value: true);
         pageReplacement(const HomeScreen());
         emit(LoginRequest(requestState: ProcessState.done));
-        add(GetUserDataEvent(email: event.email, password: event.password));
+        _getUserData(
+          email: event.email,
+          password: event.password,
+        );
       },
     );
   }
@@ -69,29 +73,12 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
         AppSp.setBool(key: SPVars.loggedIn, value: true);
         pageReplacement(const HomeScreen());
         emit(RegisterRequest(requestState: ProcessState.done));
-        add(GetUserDataEvent(
-            email: event.newUser.email, password: event.newUser.password));
       },
     );
   }
 
-  FutureOr<void> _getData(
-      GetUserDataEvent event, Emitter<LoginState> emit) async {
-    emit(GetUserDataRequest(requestState: ProcessState.processing));
-    final res = await sl<GetUserUseCase>()
-        .call(email: event.email, password: event.password);
-    res.fold(
-      (l) {
-        showMessage(l.message);
-        emit(
-          GetUserDataRequest(
-            requestState: ProcessState.failed,
-            resultMessage: l.message,
-          ),
-        );
-      },
-      (r) => emit(GetUserDataRequest(requestState: ProcessState.done)),
-    );
+  _getUserData({required String email, required String password}) async {
+    await sl<GetUserUseCase>().call(email: email, password: password);
   }
 
   FutureOr<void> _invertShowState(

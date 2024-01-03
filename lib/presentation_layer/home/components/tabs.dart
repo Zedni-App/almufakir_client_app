@@ -6,7 +6,7 @@ import '../../sections_tab/sections_tab.dart';
  final tabs = [
   const MainTab(),
   const SectionsTab(),
-  ProfileTab(),
+  const ProfileTab(),
   const Notifications(),
   const More(),
 ];

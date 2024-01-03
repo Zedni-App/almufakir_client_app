@@ -114,8 +114,9 @@ class ProfileRepository extends BaseProfileRepo {
   }
 
   bool _saveData(decode) {
-    if (decode["student"] != null && decode["student"].isNotEmpty) {
-      final user = UserModel.fromMap(decode["student"][0]);
+    if (decode["id"] != null) {
+      final user = UserModel.fromMap(decode);
+      
       user.saveUser();
       return true;
     }

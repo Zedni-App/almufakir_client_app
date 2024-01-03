@@ -33,9 +33,12 @@ class InfoRow extends StatelessWidget {
                     color: AppColors.kPrimaryColor,),
               ),
               const SizedBox(width: 5),
-              Text(
-                value,
-                style: const TextStyle(fontSize: 18),
+              Flexible(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  style: const TextStyle(fontSize: 18),
+                ),
               ),
             ],
           ),
