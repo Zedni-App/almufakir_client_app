@@ -17,4 +17,6 @@ class AppAssets {
   static const reminder = "assets/images/reminder.png";
   static const steper = "assets/images/steper.png";
   static const timeline = "assets/images/timeline.png";
+  static const notify = "assets/svg/notification.svg";
+
 }

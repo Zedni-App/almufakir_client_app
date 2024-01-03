@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             navigatorKey: navKey,
             builder: (context, child) =>
                 Directionality(textDirection: TextDirection.rtl, child: child!),
-            home: !AppSp.getBool(SPVars.loggedIn)
+            home: AppSp.getBool(SPVars.loggedIn)
                 ? const HomeScreen()
                 : const LoginScreen(),
           );
