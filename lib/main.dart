@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ProfileBloc()),
       ],
       child: BlocBuilder<ProfileBloc, ProfileState>(
+        buildWhen: (_,c)=>c is AppThemeChanged,
         builder: (context, state) {
           return MaterialApp(
             title: 'Almufakir',

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/app_styles/app_theme.dart';
+
 class BrightnessSwitcher extends StatelessWidget {
   const BrightnessSwitcher({Key? key}) : super(key: key);
 
@@ -14,17 +16,17 @@ class BrightnessSwitcher extends StatelessWidget {
             child: child,
           );
         },
-        child: Theme.of(context).brightness == Brightness.light
+        child: AppTheme.isDark()
             ? const Icon(
-                CupertinoIcons.moon_stars_fill,
-                key: Key("night"),
-                color: Colors.black54,
-                size: 30,
-              )
-            : const Icon(
                 CupertinoIcons.sun_min_fill,
                 key: Key("day"),
                 color: Colors.yellowAccent,
+                size: 30,
+              )
+            : const Icon(
+                CupertinoIcons.moon_stars_fill,
+                key: Key("night"),
+                color: Colors.black54,
                 size: 30,
               ),
       );
