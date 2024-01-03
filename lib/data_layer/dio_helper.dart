@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class DioHelper {
   late final Dio _dio;
-  static const baseURL = "https://almufakir.000webhostapp.com/";
+  static const baseURL = "https://almufakir2.000webhostapp.com/";
 
   DioHelper() {
     _dio = Dio(

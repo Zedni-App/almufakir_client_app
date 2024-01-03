@@ -6,7 +6,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../app_styles/theme.dart';
+import '../app_styles/app_theme.dart';
 
 Future<File?> pickProfileImage(bool fromGallery) async {
   final pickedImage = await pickImage(fromGallery);

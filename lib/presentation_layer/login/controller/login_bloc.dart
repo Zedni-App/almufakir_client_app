@@ -11,7 +11,7 @@ import '../../../../core/utilities/service_locator.dart';
 import '../../../../domain_layer/use_cases/login/login_user.dart';
 import '../../../core/enums.dart';
 import '../../../core/utilities/navigators.dart';
-import '../../home/screens/home_screen.dart';
+import '../../home/home_screen.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

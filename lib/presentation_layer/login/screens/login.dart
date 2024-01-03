@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/app_styles/size_config.dart';
-import '../../../core/app_styles/theme.dart';
+import '../../../core/app_styles/app_theme.dart';
 import '../../../core/enums.dart';
 import '../../../core/utilities/navigators.dart';
 import '../../../core/utilities/validators.dart';

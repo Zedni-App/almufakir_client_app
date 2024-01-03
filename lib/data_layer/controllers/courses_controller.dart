@@ -7,27 +7,27 @@ class CoursesController {
 
   CoursesController(this.dio);
 
-  Future getCombo() async {
-    final value = await dio.getData(url: 'api/get_TC_data.php');
-    final res = json.decode(value!.data);
-    return res;
-  }
+  // Future getCombo() async {
+  //   final value = await dio.getData(url: 'api/get_TC_data.php');
+  //   final res = json.decode(value!.data);
+  //   return res;
+  // }
 
-  Future getCourses() async {
-    final value = await dio.getData(url: 'api/get_TC_data.php');
-    final res = json.decode(value!.data);
-    return res['courses'];
-  }
+  // Future getCourses() async {
+  //   final value = await dio.getData(url: 'api/get_TC_data.php');
+  //   final res = json.decode(value!.data);
+  //   return res['courses'];
+  // }
 
-  Future getTeachers() async {
-    final value = await dio.getData(url: 'api/get_TC_data.php');
-    final res = json.decode(value!.data);
-    return res['teachers'];
-  }
+  // Future getTeachers() async {
+  //   final value = await dio.getData(url: 'api/get_TC_data.php');
+  //   final res = json.decode(value!.data);
+  //   return res['teachers'];
+  // }
 
   Future getSections() async {
-    final value = await dio.getData(url: 'api/get_TC_data.php');
-    final res = json.decode(value!.data);
-    return res['sections'];
+    final value = await dio.getData(url: 'admin/sections/get_sections.php');
+  
+    return json.decode(value!.data);
   }
 }
