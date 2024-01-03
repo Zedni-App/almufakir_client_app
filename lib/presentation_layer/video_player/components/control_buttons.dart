@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../data_layer/shared_preferences.dart';
-import '../../../core/app_styles/theme.dart';
+import '../../../core/app_styles/app_theme.dart';
 import '../../../core/utilities/navigators.dart';
 
 class ControlButtons extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zidne/presentation_layer/login/components/logo_image.dart';
 
-import '../../../core/app_styles/theme.dart';
+import '../../../core/app_styles/app_theme.dart';
 
 
 class ForgetPasswordScreen extends StatefulWidget {

@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'core/app_styles/theme.dart';
+import 'core/app_styles/app_theme.dart';
 import 'core/utilities/service_locator.dart';
 import 'data_layer/hive_helper.dart';
 import 'data_layer/shared_preferences.dart';
-import 'presentation_layer/home/controller/home_bloc.dart';
-import 'presentation_layer/home/screens/home_screen.dart';
+import 'presentation_layer/home/home_screen.dart';
 import 'presentation_layer/login/controller/login_bloc.dart';
 import 'presentation_layer/login/screens/login.dart';
-import 'presentation_layer/profile/controller/profile_bloc.dart';
+import 'presentation_layer/profile_tab/controller/profile_bloc.dart';
+import 'presentation_layer/sections_tab/cubit/sections_cubit.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
-        BlocProvider(create: (_) => HomeBloc()),
+        BlocProvider(create: (_) => SectionsCubit()),
         BlocProvider(create: (_) => ProfileBloc()),
       ],
       child: BlocBuilder<ProfileBloc, ProfileState>(
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Almufakir',
             debugShowCheckedModeBanner: false,
-            theme: getTheme(context.read<ProfileBloc>().isDark),
+            theme: AppTheme.getTheme(context.read<ProfileBloc>().isDark),
             navigatorKey: navKey,
             builder: (context, child) =>
                 Directionality(textDirection: TextDirection.rtl, child: child!),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'presentation_layer/components/my_circle_avatar.dart';
+import 'presentation_layer/shared_components/my_circle_avatar.dart';
 
 class NotificationItem extends StatefulWidget {
   final String title;
