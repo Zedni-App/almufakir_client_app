@@ -20,18 +20,16 @@ class CourseEntityAdapter extends TypeAdapter<CourseEntity> {
       id: fields[0] as int,
       name: fields[1] as String,
       description: fields[2] as String,
-      price: fields[7] as String,
+      price: fields[5] as String,
       imageURL: fields[3] as String,
-      teacherName: fields[5] as String,
-      sectionName: fields[6] as String,
-      isImageFromLocal: fields[4] as bool,
+      teacherName: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CourseEntity obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,12 +39,8 @@ class CourseEntityAdapter extends TypeAdapter<CourseEntity> {
       ..writeByte(3)
       ..write(obj.imageURL)
       ..writeByte(4)
-      ..write(obj.isImageFromLocal)
-      ..writeByte(5)
       ..write(obj.teacherName)
-      ..writeByte(6)
-      ..write(obj.sectionName)
-      ..writeByte(7)
+      ..writeByte(5)
       ..write(obj.price);
   }
 

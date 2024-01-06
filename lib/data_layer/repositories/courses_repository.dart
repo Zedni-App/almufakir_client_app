@@ -5,6 +5,7 @@ import '../../core/errors/failure_formatter.dart';
 import '../../domain_layer/repository/base_courses_repo.dart';
 import '../controllers/courses_controller.dart';
 import '../hive_helper.dart';
+import '../models/course_model.dart';
 import '../models/section_model.dart';
 
 class CoursesRepository extends BaseCoursesRepo {
@@ -12,20 +13,22 @@ class CoursesRepository extends BaseCoursesRepo {
 
   CoursesRepository(this.controller);
 
-  // @override
-  // Future<Either<Failure, List<CourseModel>>> getCourses() async {
-  //   try {
-  //     final res = await controller.getCourses();
-  //     final formatted = List.generate(
-  //       res.length,
-  //       (index) => CourseModel.fromMap(res[index]),
-  //     );
-  //     saveBooksData(formatted, kCourseBox);
-  //     return Right(formatted);
-  //   } catch (e) {
-  //     return Left(formatFailure(e));
-  //   }
-  // }
+  @override
+  Future<Either<Failure, List<CourseModel>>> getCourses(
+      {required int sectionID}) async {
+    try {
+      final res = await controller.getCourses(sectionID: sectionID);
+      
+      final formatted = List.generate(
+        res.length,
+        (index) => CourseModel.fromMap(res[index]),
+      );
+      HiveHelper.saveBooksData(formatted, kCourseBox);
+      return Right(formatted);
+    } catch (e) {
+      return Left(formatFailure(e));
+    }
+  }
 
   // @override
   // Future<Either<Failure, ComboModel>> getCombo() async {

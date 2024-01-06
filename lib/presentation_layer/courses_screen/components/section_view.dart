@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:zidne/core/app_styles/app_theme.dart';
-import 'package:zidne/core/app_styles/size_config.dart';
-import 'package:zidne/core/utilities/navigators.dart';
-import 'package:zidne/domain_layer/entities/section_entity.dart';
 
-import '../../courses_screen/courses.dart';
+import '../../../core/app_styles/app_theme.dart';
+import '../../../core/app_styles/size_config.dart';
+import '../../../domain_layer/entities/course_entity.dart';
 import '../../shared_components/network_image.dart';
 
-class SectionView extends StatelessWidget {
-  const SectionView(this.section, {super.key});
 
-  final SectionEntity section;
+class CourseView extends StatelessWidget {
+  const CourseView(this.course, {super.key});
+
+  final CourseEntity course;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        pagePush(Courses(section: section,));
+        
       },
       child: Card(
         child: Column(
@@ -26,7 +25,7 @@ class SectionView extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 1,
                 child: NetworkImageWidget(
-                  imageUrl: section.image,
+                  imageUrl: course.imageURL,
                 ),
               ),
             ),
@@ -42,7 +41,7 @@ class SectionView extends StatelessWidget {
                   horizontal: percentWidth(0.03),
                 ),
                 child: Text(
-                  section.name,
+                  course.name,
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

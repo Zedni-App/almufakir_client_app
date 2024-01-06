@@ -15,6 +15,7 @@ import '../../domain_layer/repository/base_courses_repo.dart';
 import '../../domain_layer/repository/base_login_repo.dart';
 import '../../domain_layer/repository/base_profile_repo.dart';
 import '../../domain_layer/use_cases/course/get_course_data.dart';
+import '../../domain_layer/use_cases/courses/get_courses.dart';
 import '../../domain_layer/use_cases/courses/get_sections.dart';
 import '../../domain_layer/use_cases/login/login_user.dart';
 import '../../domain_layer/use_cases/login/register_user.dart';
@@ -36,7 +37,7 @@ class ServicesLocator {
     sl.registerLazySingleton(() => UpdateUserPhotoUseCase(sl()));
     sl.registerLazySingleton(() => UpdateUserPasswordUseCase(sl()));
 
-    // sl.registerLazySingleton(() => GetCoursesUseCase(sl()));
+    sl.registerLazySingleton(() => GetCoursesUseCase(sl()));
     sl.registerLazySingleton(() => GetCourseDataUseCase(sl()));
     sl.registerLazySingleton(() => GetSectionsUseCase(sl()));
     // sl.registerLazySingleton(() => GetTeachersUseCase(sl()));

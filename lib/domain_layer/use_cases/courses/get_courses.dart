@@ -1,14 +1,15 @@
-// import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart';
 
-// import '../../../../core/failure_formatter.dart';
-// import '../../entities/course_entity.dart';
-// import '../../repository/base_courses_repo.dart';
 
-// class GetCoursesUseCase {
-//   final BaseCoursesRepo _repository;
+import '../../../core/errors/failure.dart';
+import '../../entities/course_entity.dart';
+import '../../repository/base_courses_repo.dart';
 
-//   GetCoursesUseCase(this._repository);
+class GetCoursesUseCase {
+  final BaseCoursesRepo _repository;
 
-//   Future<Either<Failure, List<CourseEntity>>> call() async =>
-//       await _repository.getCourses();
-// }
+  GetCoursesUseCase(this._repository);
+
+  Future<Either<Failure, List<CourseEntity>>> call({required int sectionID}) async =>
+      await _repository.getCourses(sectionID: sectionID);
+}

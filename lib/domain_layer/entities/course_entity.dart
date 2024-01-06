@@ -14,12 +14,8 @@ class CourseEntity extends Equatable {
   @HiveField(3)
   final String imageURL;
   @HiveField(4)
-  final bool isImageFromLocal;
-  @HiveField(5)
   final String teacherName;
-  @HiveField(6)
-  final String sectionName;
-  @HiveField(7)
+  @HiveField(5)
   final String price;
 
   const CourseEntity({
@@ -29,8 +25,6 @@ class CourseEntity extends Equatable {
     required this.price,
     required this.imageURL,
     required this.teacherName,
-    required this.sectionName,
-    this.isImageFromLocal = false,
   });
 
   @override
@@ -41,29 +35,8 @@ class CourseEntity extends Equatable {
         imageURL,
         description,
         teacherName,
-        sectionName,
-        isImageFromLocal,
+        
       ];
 
-  CourseEntity copyWith({
-    int? id,
-    String? name,
-    String? description,
-    String? imageURL,
-    bool? isImageFromLocal,
-    String? teacherName,
-    String? sectionName,
-    String? price,
-  }) {
-    return CourseEntity(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      description: description ?? this.description,
-      imageURL: imageURL ?? this.imageURL,
-      isImageFromLocal: isImageFromLocal ?? this.isImageFromLocal,
-      teacherName: teacherName ?? this.teacherName,
-      sectionName: sectionName ?? this.sectionName,
-      price: price ?? this.price,
-    );
-  }
+ 
 }

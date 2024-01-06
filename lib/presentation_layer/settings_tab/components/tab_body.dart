@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zidne/presentation_layer/login/controller/login_bloc.dart';
 
-import '../../../core/app_styles/app_theme.dart';
 import '../../../core/utilities/navigators.dart';
 import '../../profile_tab/controller/profile_bloc.dart';
 import '../about_us_screen.dart';

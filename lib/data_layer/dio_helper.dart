@@ -14,15 +14,10 @@ class DioHelper {
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
-          'bearer-token': AppSp.getString(SPVars.sessionToken),
-      
         },
-        
       ),
     );
   }
-
-
 
   Future<Response?> getData({
     required String url,
@@ -58,10 +53,10 @@ class DioHelper {
     required String url,
     Map<String, dynamic>? query,
     dynamic data,
-    String? bearerToken,
   }) async {
     _dio.options.headers = {
-      if (bearerToken != null) 'Authorization': 'Bearer $bearerToken',
+      'bt': AppSp.getString(SPVars.sessionToken),
+      'ui': AppSp.getInt(SPVars.userID),
     };
     return await _dio.post(
       url,
