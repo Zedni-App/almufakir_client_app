@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/app_styles/app_theme.dart';
-
 class BrightnessSwitcher extends StatelessWidget {
-  const BrightnessSwitcher({Key? key}) : super(key: key);
-
+  const BrightnessSwitcher({Key? key, required this.showSun}) : super(key: key);
+  final bool showSun;
   @override
   Widget build(BuildContext context) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 400),
@@ -16,7 +14,7 @@ class BrightnessSwitcher extends StatelessWidget {
             child: child,
           );
         },
-        child: AppTheme.isDark()
+        child: showSun
             ? const Icon(
                 CupertinoIcons.sun_min_fill,
                 key: Key("day"),

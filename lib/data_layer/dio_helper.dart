@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'shared_preferences.dart';
 
 class DioHelper {
   late final Dio _dio;
@@ -13,24 +14,15 @@ class DioHelper {
         receiveDataWhenStatusError: true,
         headers: {
           'Content-Type': 'application/json',
+          'bearer-token': AppSp.getString(SPVars.sessionToken),
+      
         },
+        
       ),
     );
   }
 
-  //  init() {
-  //   _dio = Dio(
-  //     BaseOptions(
-  //       followRedirects: false,
-  //       validateStatus: (status) => true,
-  //       baseUrl: baseURL,
-  //       receiveDataWhenStatusError: true,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     ),
-  //   );
-  // }
+
 
   Future<Response?> getData({
     required String url,

@@ -28,17 +28,15 @@ class UserModel extends UserEntity {
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
-    
-  
     return UserModel(
       id: map['id'] as int,
-      fName: map['fname'] ?? "",
-      lName: map['lname'] ?? "",
+      fName: map['fname'] as String,
+      lName: map['lname'] as String,
       email: map['email'] as String,
       phone: map['phone'] ?? "",
       password: "",
-      imageUrl: DioHelper.baseURL + map['image'],
-      regDate: map['reg_date'] as String,
+      imageUrl: DioHelper.baseURL + (map['image'] ?? ""),
+      regDate: map['reg_date'] ?? "",
     );
   }
 
@@ -54,7 +52,7 @@ class UserModel extends UserEntity {
       regDate: user.regDate,
     );
   }
-  saveUser() {
+  saveUserData() {
     AppSp.setInt(key: SPVars.userID, value: id);
     AppSp.setString(key: SPVars.userName, value: fName);
     AppSp.setString(key: SPVars.userNick, value: lName);

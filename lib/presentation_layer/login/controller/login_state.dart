@@ -24,4 +24,10 @@ class RegisterRequest extends LoginState {
   });
 }
 
+class LogoutDone extends LoginState {
+  final String message;
+
+  LogoutDone({required this.message});
+}
+
 class InvertPassHideState extends LoginState {}

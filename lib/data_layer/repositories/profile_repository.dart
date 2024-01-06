@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:zidne/core/app_user.dart';
 import 'package:zidne/data_layer/dio_helper.dart';
 import 'package:zidne/data_layer/models/user_model.dart';
 import 'package:zidne/domain_layer/entities/user_entity.dart';
@@ -100,6 +101,7 @@ class ProfileRepository extends BaseProfileRepo {
           ),
         );
       }
+
       final done = _saveData(json.decode(res));
       if (done) {
         return const Right("تم");
@@ -116,8 +118,9 @@ class ProfileRepository extends BaseProfileRepo {
   bool _saveData(decode) {
     if (decode["id"] != null) {
       final user = UserModel.fromMap(decode);
-      
-      user.saveUser();
+
+      user.saveUserData();
+      appUser = user;
       return true;
     }
     return false;

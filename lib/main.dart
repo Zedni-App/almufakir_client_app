@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:zidne/core/utilities/navigators.dart';
 
 import 'core/app_styles/app_theme.dart';
 import 'core/utilities/service_locator.dart';
@@ -12,13 +13,12 @@ import 'presentation_layer/login/screens/login.dart';
 import 'presentation_layer/profile_tab/controller/profile_bloc.dart';
 import 'presentation_layer/sections_tab/cubit/sections_cubit.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppSp.init();
   ServicesLocator().init();
   await sl<DotEnv>().load();
-  await initHive();
+  await HiveHelper.init();
   runApp(const MyApp());
 }
 
@@ -35,19 +35,30 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => SectionsCubit()),
         BlocProvider(create: (_) => ProfileBloc()),
       ],
-      child: BlocBuilder<ProfileBloc, ProfileState>(
-        buildWhen: (_,c)=>c is AppThemeChanged,
+      child: BlocBuilder<LoginBloc, LoginState>(
+        buildWhen: (p, c) {
+          if (p is! LogoutDone && c is LogoutDone) {
+            showMessage(c.message);
+            pageReplacement(const LoginScreen());
+          }
+          return false;
+        },
         builder: (context, state) {
-          return MaterialApp(
-            title: 'Almufakir',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.getTheme(context.read<ProfileBloc>().isDark),
-            navigatorKey: navKey,
-            builder: (context, child) =>
-                Directionality(textDirection: TextDirection.rtl, child: child!),
-            home: AppSp.getBool(SPVars.loggedIn)
-                ? const HomeScreen()
-                : const LoginScreen(),
+          return BlocBuilder<ProfileBloc, ProfileState>(
+            buildWhen: (_, c) => c is AppThemeChanged,
+            builder: (context, state) {
+              return MaterialApp(
+                title: 'Almufakir',
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.getTheme(context.read<ProfileBloc>().isDark),
+                navigatorKey: navKey,
+                builder: (context, child) => Directionality(
+                    textDirection: TextDirection.rtl, child: child!),
+                home: AppSp.getBool(SPVars.loggedIn)
+                    ? const HomeScreen()
+                    : const LoginScreen(),
+              );
+            },
           );
         },
       ),
