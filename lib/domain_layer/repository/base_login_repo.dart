@@ -10,4 +10,5 @@ abstract class BaseLoginRepo {
   });
 
   Future<Either<Failure, String>> registerStudent(UserEntity user);
+  
 }

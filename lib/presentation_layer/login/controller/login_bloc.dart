@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zidne/data_layer/hive_helper.dart';
 import 'package:zidne/data_layer/shared_preferences.dart';
 import 'package:zidne/domain_layer/entities/user_entity.dart';
 import 'package:zidne/domain_layer/use_cases/login/register_user.dart';
@@ -20,8 +20,8 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
   LoginBloc() : super(LoginInitial()) {
     on<LoginEvent>(_login);
     on<RegisterEvent>(_register);
+    on<LogoutEvent>(_logout);
     on<InvertShowPass>(_invertShowState);
-    on<GetUserDataEvent>(_getData);
   }
 
   bool hidePass = true;
@@ -45,7 +45,10 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
         AppSp.setBool(key: SPVars.loggedIn, value: true);
         pageReplacement(const HomeScreen());
         emit(LoginRequest(requestState: ProcessState.done));
-        add(GetUserDataEvent(email: event.email, password: event.password));
+        _getUserData(
+          email: event.email,
+          password: event.password,
+        );
       },
     );
   }
@@ -69,34 +72,29 @@ class LoginBloc extends Bloc<LoginEvents, LoginState> {
         AppSp.setBool(key: SPVars.loggedIn, value: true);
         pageReplacement(const HomeScreen());
         emit(RegisterRequest(requestState: ProcessState.done));
-        add(GetUserDataEvent(
-            email: event.newUser.email, password: event.newUser.password));
+        _getUserData(
+          email: event.newUser.email,
+          password: event.newUser.password,
+        );
+        emit(RegisterRequest(requestState: ProcessState.done));
       },
     );
   }
 
-  FutureOr<void> _getData(
-      GetUserDataEvent event, Emitter<LoginState> emit) async {
-    emit(GetUserDataRequest(requestState: ProcessState.processing));
-    final res = await sl<GetUserUseCase>()
-        .call(email: event.email, password: event.password);
-    res.fold(
-      (l) {
-        showMessage(l.message);
-        emit(
-          GetUserDataRequest(
-            requestState: ProcessState.failed,
-            resultMessage: l.message,
-          ),
-        );
-      },
-      (r) => emit(GetUserDataRequest(requestState: ProcessState.done)),
-    );
+  _getUserData({required String email, required String password}) async {
+    await sl<GetUserUseCase>().call(email: email, password: password);
   }
 
   FutureOr<void> _invertShowState(
       InvertShowPass event, Emitter<LoginState> emit) {
     hidePass = !hidePass;
     emit(InvertPassHideState());
+  }
+
+  FutureOr<void> _logout(LogoutEvent event, Emitter<LoginState> emit) async {
+     await AppSp.clear();
+
+    await HiveHelper.clear();
+    emit(LogoutDone(message: event.manually?"تم تسجيل الخروج بنجاح":"تم تسجيل الخروج بسبب انتهاء صلاحية الجلسة"));
   }
 }

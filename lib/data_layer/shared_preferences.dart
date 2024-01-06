@@ -32,6 +32,11 @@ class AppSp {
   static double getDouble(String key) => _sp.getDouble(key) ?? -1;
 
   static bool getBool(String key) => _sp.getBool(key) ?? false;
+
+  static Future<bool> removeKey(String key) => _sp.remove(key);
+  static Future<bool> clear() async {
+    return await _sp.clear();
+  }
 }
 
 abstract class SPVars {
@@ -45,5 +50,6 @@ abstract class SPVars {
   static const userRate = "user_rate";
   static const userRegDate = "user_reg_date";
   static const userImageURL = "user_image";
+  static const sessionToken = "sessionToken";
   static const videoMoveValue = "videoMoveValue";
 }

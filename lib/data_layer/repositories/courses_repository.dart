@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/failure_formatter.dart';
+import '../../core/errors/failure.dart';
+import '../../core/errors/failure_formatter.dart';
 import '../../domain_layer/repository/base_courses_repo.dart';
 import '../controllers/courses_controller.dart';
 import '../hive_helper.dart';
@@ -48,7 +49,7 @@ class CoursesRepository extends BaseCoursesRepo {
         res.length,
         (index) => SectionModel.fromMap(res[index]),
       );
-      saveBooksData(formatted, kSectionBox);
+      HiveHelper.saveBooksData(formatted, kSectionBox);
       return Right(formatted);
     } catch (e) {
       return Left(formatFailure(e));

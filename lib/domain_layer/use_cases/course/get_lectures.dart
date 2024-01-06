@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/failure_formatter.dart';
+import '../../../core/errors/failure.dart';
 import '../../entities/lecture_entity.dart';
 import '../../repository/base_course_repo.dart';
 

@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:zidne/data_layer/controllers/login_controller.dart';
-import 'package:zidne/data_layer/models/user_model.dart';
-import 'package:zidne/domain_layer/entities/user_entity.dart';
 
 import '../../core/errors/failure.dart';
+import '../../core/errors/failure_formatter.dart';
+import '../../domain_layer/entities/user_entity.dart';
 import '../../domain_layer/repository/base_login_repo.dart';
+import '../controllers/login_controller.dart';
+import '../models/user_model.dart';
+import '../shared_preferences.dart';
 
 class LoginRepository extends BaseLoginRepo {
   final LoginController controller;
@@ -18,8 +22,11 @@ class LoginRepository extends BaseLoginRepo {
     required String password,
   }) async {
     try {
-      final res = await controller.login(email: email, password: password);
+      final response = await controller.login(email: email, password: password);
+      final jsonRes = json.decode(response);
+      final res = jsonRes["result"];
       if (res == "StudentFound") {
+        AppSp.setString(key: SPVars.sessionToken, value: jsonRes['token']);
         return const Right("أهلا بعودتك");
       }
       if (res == "StudentNotFound") {
@@ -34,7 +41,7 @@ class LoginRepository extends BaseLoginRepo {
       }
       return const Left(ServerFailure("عذراً هناك خطأ غير متوقع"));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(formatFailure(e));
     }
   }
 
@@ -42,8 +49,12 @@ class LoginRepository extends BaseLoginRepo {
   Future<Either<Failure, String>> registerStudent(UserEntity user) async {
     final model = UserModel.fromEntity(user);
     try {
-      final res = await controller.register(model);
+      final response = await controller.register(model);
+      final jsonRes = json.decode(response);
+      final res = jsonRes["result"];
       if (res == "Inserted") {
+        AppSp.setString(key: SPVars.sessionToken, value: jsonRes['token']);
+
         return Right("أهلا بك ${user.fName}");
       }
       if (res == "Existed") {
@@ -58,7 +69,7 @@ class LoginRepository extends BaseLoginRepo {
       }
       return const Left(ServerFailure("عذراً هناك خطأ غير متوقع"));
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return Left(formatFailure(e));
     }
   }
 }

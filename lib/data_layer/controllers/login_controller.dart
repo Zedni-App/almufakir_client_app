@@ -29,7 +29,7 @@ class LoginController {
       url: 'students/student_register.php',
       data: FormData.fromMap(user.toMap()),
     );
-
+    
     return value!.data;
   }
 }

@@ -1,12 +1,13 @@
-import '../../../more.dart';
-import '../../../notifications.dart';
+import '../../notification_tab/notifications_tab.dart';
 import '../../main_tab/main_tab.dart';
 import '../../profile_tab/screens/profile_tab.dart';
 import '../../sections_tab/sections_tab.dart';
- final tabs = [
-  const MainTab(),
-  const SectionsTab(),
+import '../../settings_tab/settings_tab.dart';
+
+const tabs = [
+  MainTab(),
+  SectionsTab(),
   ProfileTab(),
-  const Notifications(),
-  const More(),
+  NotificationsTab(),
+  SettingsTab(),
 ];

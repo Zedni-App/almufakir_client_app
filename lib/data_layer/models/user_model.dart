@@ -1,3 +1,4 @@
+import 'package:zidne/data_layer/dio_helper.dart';
 import 'package:zidne/data_layer/shared_preferences.dart';
 
 import '../../domain_layer/entities/user_entity.dart';
@@ -34,8 +35,8 @@ class UserModel extends UserEntity {
       email: map['email'] as String,
       phone: map['phone'] ?? "",
       password: "",
-      imageUrl: map['imageUrl'] ?? "",
-      regDate: map['reg_date'] as String,
+      imageUrl: DioHelper.baseURL + (map['image'] ?? ""),
+      regDate: map['reg_date'] ?? "",
     );
   }
 
@@ -51,7 +52,7 @@ class UserModel extends UserEntity {
       regDate: user.regDate,
     );
   }
-  saveUser() {
+  saveUserData() {
     AppSp.setInt(key: SPVars.userID, value: id);
     AppSp.setString(key: SPVars.userName, value: fName);
     AppSp.setString(key: SPVars.userNick, value: lName);

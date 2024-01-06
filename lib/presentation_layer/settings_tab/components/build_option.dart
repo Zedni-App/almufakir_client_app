@@ -5,11 +5,12 @@ class BuildOption extends StatelessWidget {
   final Widget icon;
   final VoidCallback onPressed;
 
-  const BuildOption(
-      {required this.title,
-      required this.icon,
-      required this.onPressed,
-      super.key});
+  const BuildOption({
+    required this.title,
+    required this.icon,
+    required this.onPressed,
+    super.key,
+  });
 
   @override
   TextButton build(BuildContext context) => TextButton(

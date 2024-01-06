@@ -24,14 +24,10 @@ class RegisterRequest extends LoginState {
   });
 }
 
-class GetUserDataRequest extends LoginState {
-  final ProcessState requestState;
-  final String resultMessage;
+class LogoutDone extends LoginState {
+  final String message;
 
-  GetUserDataRequest({
-    required this.requestState,
-    this.resultMessage = '',
-  });
+  LogoutDone({required this.message});
 }
 
 class InvertPassHideState extends LoginState {}

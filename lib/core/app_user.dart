@@ -44,4 +44,16 @@ void updateAppUser({
   if (imageUrl != null) {
     AppSp.setString(key: SPVars.userImageURL, value: imageUrl);
   }
+
 }
+ void logOutUser() {
+    AppSp.removeKey(SPVars.sessionToken);
+    AppSp.removeKey(SPVars.userID);
+    AppSp.removeKey(SPVars.userName);
+    AppSp.removeKey(SPVars.userNick);
+    AppSp.removeKey(SPVars.userEmail);
+    AppSp.removeKey(SPVars.userPhone);
+    AppSp.removeKey(SPVars.userImageURL);
+    AppSp.removeKey(SPVars.userRegDate);
+    
+  }

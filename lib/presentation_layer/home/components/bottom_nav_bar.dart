@@ -37,8 +37,8 @@ class BottomNavBar extends StatelessWidget {
               icon: Icon(Icons.notifications),
             ),
             BottomNavigationBarItem(
-              label: "المزيد",
-              icon: Icon(Icons.more),
+              label: "الإعدادات",
+              icon: Icon(Icons.settings),
             ),
           ],
         );

@@ -1,45 +1,27 @@
 part of 'login_bloc.dart';
 
-abstract class LoginEvents extends Equatable {
-  const LoginEvents();
-}
+abstract class LoginEvents {}
 
 class LoginEvent extends LoginEvents {
   final String email;
   final String password;
 
-  const LoginEvent({
+  LoginEvent({
     required this.email,
     required this.password,
   });
-
-  @override
-  List<Object?> get props => [
-        email,
-        password,
-      ];
 }
 
 class RegisterEvent extends LoginEvents {
   final UserEntity newUser;
 
-  const RegisterEvent({required this.newUser});
-
-  @override
-  List<Object?> get props => [newUser];
+  RegisterEvent({required this.newUser});
 }
 
-class InvertShowPass extends LoginEvents {
-  @override
-  List<Object?> get props => [];
-}
+class InvertShowPass extends LoginEvents {}
 
-class GetUserDataEvent extends LoginEvents {
-  final String email;
-  final String password;
+class LogoutEvent extends LoginEvents {
+  final bool manually;
 
-  const GetUserDataEvent({required this.email, required this.password});
-
-  @override
-  List<Object> get props => [email, password];
+  LogoutEvent({required this.manually});
 }
